@@ -1,5 +1,3 @@
-# trineo-apex-common
-
 Trineo Apex Common
 ==========================
 
