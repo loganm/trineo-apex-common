@@ -4,9 +4,9 @@
  * Process a CSV using a batch job
  * -------------------------------
  * This is intended for use with a large CSV.
- * We use the CSVParser.LineReader to break the CSV in to smaller chunks.
- * You should implement ICSVProcessor, writing code to process a CSV of your chosen scope size.
- * The execute method of this batch job will simply call your ICSVProcessor.
+ * We use the trineo_CSVParser.LineReader to break the CSV in to smaller chunks.
+ * You should implement trineo_ICSVProcessor, writing code to process a CSV of your chosen scope size.
+ * The execute method of this batch job will simply call your trineo_ICSVProcessor.
  * NOTE: The CSV _must_ be UTF-8 encoded
  *
  * @author: Nathan (Trineo)
@@ -20,7 +20,7 @@ global with sharing class trineo_CSVBatchProcess implements Database.batchable<S
     private Integer startRow;
 
     protected List<String> errors = new List<String>();
-    private ICSVProcessor processor;
+    private trineo_ICSVProcessor processor;
 
     public Integer csvLength {
         get
@@ -34,7 +34,7 @@ global with sharing class trineo_CSVBatchProcess implements Database.batchable<S
         }
     }
 
-    public CSVBatchProcess(Blob blobCSV, ICSVProcessor processor) {
+    public CSVBatchProcess(Blob blobCSV, trineo_ICSVProcessor processor) {
         this.processor = processor;
         this.blobCSV = blobCSV;
     }
@@ -55,8 +55,8 @@ global with sharing class trineo_CSVBatchProcess implements Database.batchable<S
         convertCSVToStr();
         this.blobCSV = null;
 
-        String lineSeparator = CSVParser.getLineSeparator(csvData);
-        return new CSVParser.LineReader(lineSeparator, csvData);
+        String lineSeparator = trineo_CSVParser.getLineSeparator(csvData);
+        return new trineo_CSVParser.LineReader(lineSeparator, csvData);
     }
 
     global void execute(Database.BatchableContext batchableContext, List<String> scope) {
@@ -70,7 +70,7 @@ global with sharing class trineo_CSVBatchProcess implements Database.batchable<S
             csvFile += row + '\n';
         }
 
-        List<List<String>> csvLines = CSVParser.parseCSV(csvFile);
+        List<List<String>> csvLines = trineo_CSVParser.parseCSV(csvFile);
         startProcessing(csvLines);
     }
 
