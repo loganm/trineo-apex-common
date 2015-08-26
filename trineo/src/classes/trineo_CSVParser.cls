@@ -4,10 +4,7 @@
  *
  * Modified 2015 Ed to use a Line Iterator so that we don't hit regex limits. Now hit
  * cpu limits at about 2500-3000 lines. The only way to avoid this is to use a batch
- * job. However that is not ideal in a lot of situations. To avoid the CPU limit
- * you can pass in a limit of rows before returning, discarding the rest of the rows.
- *
- * Tests in CSVParser_2_Test
+ * job - see trineo_CSVBatchProcess.cls
  *
  * @author: Luke/Morgan/Ed/Nathan
  * @date: Feb 2012

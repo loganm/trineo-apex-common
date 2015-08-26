@@ -1,7 +1,14 @@
 /**
  * CSVBatchProcess.cls
- * Description: Process a CSV using a batch job
- * NOTE: The CSV must be UTF-8 encoded
+ *
+ * Process a CSV using a batch job
+ * -------------------------------
+ * This is intended for use with a large CSV.
+ * We use the CSVParser.LineReader to break the CSV in to smaller chunks.
+ * You should implement ICSVProcessor, writing code to process a CSV of your chosen scope size.
+ * The execute method of this batch job will simply call your ICSVProcessor.
+ * NOTE: The CSV _must_ be UTF-8 encoded
+ *
  * @author: Nathan (Trineo)
  * @date: 20 August 2015 (Thursday)
  */
