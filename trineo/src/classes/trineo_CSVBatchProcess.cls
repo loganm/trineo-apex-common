@@ -12,7 +12,7 @@
  * @author: Nathan (Trineo)
  * @date: 20 August 2015 (Thursday)
  */
-global with sharing class CSVBatchProcess implements Database.batchable<String>, Database.Stateful {
+global with sharing class trineo_CSVBatchProcess implements Database.batchable<String>, Database.Stateful {
 
     global Map<String, Integer> headers = null; // First execute will be null.
     private Blob blobCSV;

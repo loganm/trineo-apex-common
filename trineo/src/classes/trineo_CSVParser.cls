@@ -10,7 +10,7 @@
  * @date: Feb 2012
  * @modified: 21 August 2015 (Friday)
  */
-public with sharing class CSVParser {
+public with sharing class trineo_CSVParser {
     public class CSVException extends Exception { }
 
     // Return a 2D String array with headers on first row

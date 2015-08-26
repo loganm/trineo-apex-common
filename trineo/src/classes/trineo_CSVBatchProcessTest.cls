@@ -3,7 +3,7 @@
  * Description: Test class for batch CSV processing
  */
 @isTest
-private class CSVBatchProcessTest {
+private class trineo_CSVBatchProcessTest {
     private static final String TEST_CSV =
         'First Name,Last Name,Email\n' +
         '"Foo","Bar","foo@bar.com"\n' +

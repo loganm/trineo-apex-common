@@ -5,7 +5,7 @@
  * @date: 21 August 2015 (Friday)
  */
 @isTest
-private class CSVParserTest {
+private class trineo_CSVParserTest {
 
     @isTest static void basicTest() {
         String content = 'Header1,"Header, 2"\nvalue1,"value,, 2"\n';
