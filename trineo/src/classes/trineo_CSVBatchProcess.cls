@@ -23,12 +23,10 @@ global with sharing class trineo_CSVBatchProcess implements Database.batchable<S
     private trineo_ICSVProcessor processor;
 
     public Integer csvLength {
-        get
-        {
+        get {
             if (csvData != null) {
                 return csvData.length();
-            } else
-            {
+            } else {
                 return 0;
             }
         }
