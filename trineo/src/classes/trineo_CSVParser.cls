@@ -13,10 +13,43 @@
 public with sharing class trineo_CSVParser {
     public class CSVException extends Exception { }
 
+    public static final String CR = '\r';
+    public static final String LF = '\n';
+    public static final String CRLF = CR + LF;
+
     // Return a 2D String array with headers on first row
     public static List<List<String>> parseCSV(String contents) {
         // default to 2,500 lines to process.
         return parseCSV(contents, 2500);
+    }
+
+    public static String toCSV(List<List<String>> csvContents) {
+        String csv = '';
+
+        Boolean firstRow = true;
+        for (List<String> row : csvContents) {
+
+            if (!firstRow) {
+                // Add a separating line break between this row and the previous row
+                csv += CRLF;
+            } else {
+                firstRow = false;
+            }
+
+            Boolean firstValue = true;
+            for (String val : row) {
+                if (!firstValue) {
+                    // Add a separating comma between this value and the previous value
+                    csv += ',';
+                } else {
+                    firstValue = false;
+                }
+
+                csv += val;
+            }
+        }
+
+        return csv;
     }
 
     public static String getLineSeparator(String contents) {
@@ -183,7 +216,8 @@ public with sharing class trineo_CSVParser {
             }
 
             if (endPos == -1) {
-                row = textData;
+                // If we are on the last line, the row is the textData substring from the current index to the end
+                row = textData.substring(index);
                 textData = '';
             } else {
                 row = textData.subString(index, endPos);

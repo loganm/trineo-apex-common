@@ -76,14 +76,7 @@ global with sharing class trineo_CSVBatchProcess implements Database.batchable<S
         if (headers == null) {
             // This is the first row. We assume that it is a header row.
             // The headers map is a map from column value to column index
-            headers = new Map<String, Integer>();
-            List<String> headerRow = csvLines[0];
-            for (Integer index = 0; index < headerRow.size(); index += 1) {
-                String header = headerRow[index];
-                if (String.isNotBlank(header)) {
-                    headers.put(header, index);
-                }
-            }
+            headers = buildHeadersMap(csvLines);
             // Remove the header row from the CSV to be processed
             csvLines.remove(0);
         }
@@ -94,6 +87,19 @@ global with sharing class trineo_CSVBatchProcess implements Database.batchable<S
             errors.add(e.getMessage() + '\n' + e.getStackTraceString());
             throw e;
         }
+    }
+
+    @TestVisible
+    private static Map<String, Integer> buildHeadersMap(List<List<String>> csvLines) {
+        Map<String, Integer> headersMap = new Map<String, Integer>();
+        List<String> headerRow = csvLines[0];
+        for (Integer index = 0; index < headerRow.size(); index += 1) {
+            String header = headerRow[index];
+            if (String.isNotBlank(header)) {
+                headersMap.put(header, index);
+            }
+        }
+        return headersMap;
     }
 
     global void finish(Database.BatchableContext batchableContext) {
