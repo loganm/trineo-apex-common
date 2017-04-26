@@ -56,4 +56,25 @@ private class trineo_CSVParserTest {
         }
         System.assertEquals(1000, numberOfLines, 'Expected 1000 lines!');
     }
+
+    @isTest static void testCommaInside() {
+        String header = 'Email,Account ID,Contact ID,Subscribed Date,Subscribe IP,Unsubscribe Time,Unsubscribe IP,Status,Account Name,Account Owner,Account Owner Email Address,Area,Business Name,Business Sector,Exclusions,First Name,Last Name,Note,Note 2,Region,School Name,Send Group,Target\n';
+        String row = 'xxx@bombay.school.nz,0019000000xhAJS,",0039000001wGFrh",2016-06-03 11:56:22 +1200,,,,active,Bombay School,Timmy Tu,timmy.tu@nlg.co.nz,Bombay,,Education,,Cherie,Lemon,20160603 NLC Additions,"Auckland, Waikato and Bay of Plenty","35 Paparata Road,",,,North\n';
+        String content = header + row;
+        List<List<String>> parse = CSVParser.parseCSV(content);
+
+        for (Integer i = 0; i < parse[0].size(); i++) {
+            System.debug('Field ' + i + ': ' + parse[0][i]);
+        }
+
+        for (Integer i = 0; i < parse[1].size(); i++) {
+            System.debug('Field ' + i + ': ' + parse[1][i]);
+        }
+        System.debug(parse[1]);
+        System.assertEquals(2, parse.size());
+        System.assertEquals(23, parse[0].size());
+        System.assertEquals(23, parse[1].size());
+
+
+    }
 }

@@ -130,7 +130,19 @@ public with sharing class trineo_CSVParser {
             Boolean makeCompositeField = false;
             //System.debug('## About to read ' + fields.size() + ' fields...');
             for (String field : fields) {
-                if (field.startsWith('"') && field.endsWith('"')) {
+                if (field == '"') {
+                    // A quote adjoining a comma at start or end of field, i.e. ", or ,"
+                    if (makeCompositeField) {
+                        // Must be closing the existing field
+                        compositeField += ',' + field;
+                        cleanFields.add(compositeField.replaceAll('DBLQT', '"'));
+                        makeCompositeField = false;
+                    } else {
+                        // Must be starting a new field
+                        makeCompositeField = true;
+                        compositeField = field;
+                    }
+                } else if (field.startsWith('"') && field.endsWith('"')) {
                     cleanFields.add(field.replaceAll('DBLQT', '"'));
                 } else if (field.startsWith('"')) {
                     makeCompositeField = true;
