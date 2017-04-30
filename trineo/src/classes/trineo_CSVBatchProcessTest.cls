@@ -10,7 +10,7 @@ private class trineo_CSVBatchProcessTest {
         '"Foo2","Bar2","foo@bar2.com"\n' +
         '"Foo3","Bar3","foo@bar3.com"\n';
 
-    private class MockCSVProcessor implements ICSVProcessor {
+    private class MockCSVProcessor implements trineo_ICSVProcessor {
         public String getDebugTitle() {
             return 'Mock CSV Processor';
         }
@@ -28,10 +28,10 @@ private class trineo_CSVBatchProcessTest {
     }
 
     @isTest static void testCSVProcessor() {
-        ICSVProcessor mockProcessor = new MockCSVProcessor();
+        trineo_ICSVProcessor mockProcessor = new MockCSVProcessor();
 
         Test.startTest();
-        CSVBatchProcess processCSV = new CSVBatchProcess(Blob.valueOf(TEST_CSV), mockProcessor);
+        trineo_CSVBatchProcess processCSV = new trineo_CSVBatchProcess(Blob.valueOf(TEST_CSV), mockProcessor);
         Database.executeBatch(processCSV);
         Test.stopTest();
 
