@@ -51,7 +51,47 @@ public with sharing class SObjectUtil
 	}
 
 	/**
+	 * Default field truncation length
+	 */
+	private static final Integer TRUNCATION_LENGTH = 3;
+	/**
+	 * Truncate the value of a given field by referring to the length of the field.
+	 * Useful when preparing DML safe data for the clientside code to use
+	 * Especially considering we currently cannot use the `AllowFieldTruncation` header over the rest API
+	 * @param SObject sObj Modified directly. The value will be truncated if its value exceeds the allowed length
+	 */
+	public static void truncateFieldValue(SObject sObj, final Schema.SObjectField field)
+	{
+		Object rawValue = sObj.get(field);
+		if ( field.getDescribe().getSoapType() != Schema.SOAPType.STRING )
+		{
+			throw new FieldTypeException( 'The provided SObject field must be a text field' );
+		}
+
+		Integer fieldLength = field.getDescribe().getLength();
+		String fieldValue = (String) sObj.get( field );
+		if ( String.isNotBlank( fieldValue ) )
+		{
+			if ( fieldValue.length() > fieldLength )
+			{
+				fieldValue = fieldValue.left( fieldLength - TRUNCATION_LENGTH );
+				for ( Integer i = 0; i < TRUNCATION_LENGTH; i ++ )
+				{
+					fieldValue += '.';
+				}
+			}
+		}
+
+		sObj.put( field, fieldValue );
+	}
+
+	/**
 	 * Exception for when there's a problem with SObjectTypes
 	 */
 	public class SObjectTypeException extends Exception {}
+
+	/**
+	 * Exception for when there's a problem with a field type
+	 */
+	public class FieldTypeException extends Exception {}
 }
