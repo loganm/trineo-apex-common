@@ -1,5 +1,5 @@
 /**
- * CSVBatchProcess.cls
+ * trineo_CSVBatchProcess.cls
  *
  * Process a CSV using a batch job
  * -------------------------------
@@ -32,7 +32,7 @@ global with sharing class trineo_CSVBatchProcess implements Database.batchable<S
         }
     }
 
-    public CSVBatchProcess(Blob blobCSV, trineo_ICSVProcessor processor) {
+    public trineo_CSVBatchProcess(Blob blobCSV, trineo_ICSVProcessor processor) {
         this.processor = processor;
         this.blobCSV = blobCSV;
     }
